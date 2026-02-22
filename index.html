@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="retro">
 
 <head>
     <meta charset="UTF-8">
@@ -16,10 +16,39 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Acme&family=Outfit:wght@100..900&display=swap"
         rel="stylesheet">
+    <style>
+        .acme-regular {
+            font-family: "Acme", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
 </head>
 
-<body>
-
+<body class=".acme-regular min-h-screen max-w-full bg-base-200 mx-auto px-10">
+    <header>
+        <h2 class="font-bold text-3xl text text-[#002C5C] my-4">Job Application Tracker</h2>
+        <div id="info-cards" class="flex justify-between items-center gap-1">
+            <div class="card bg-slate-700 text-neutral-content w-96 shadow-2xl">
+                <div class="card-body flex flex-col justify-start items-center text-center p-1">
+                    <h2 class="card-title">Total</h2>
+                    <span>8</span>
+                </div>
+            </div>
+            <div class="card bg-slate-700 text-neutral-content w-96 shadow-xl">
+                <div class="card-body flex flex-col justify-start items-center text-center p-1 drop-shadow-2xl">
+                    <h2 class="card-title">Accepted</h2>
+                    <span>0</span>
+                </div>
+            </div>
+            <div class="card bg-slate-700 text-neutral-content w-96 shadow-xl">
+                <div class="card-body flex flex-col justify-start items-center text-center p-1 drop-shadow-2xl">
+                    <h2 class="card-title">Rejected</h2>
+                    <span>0</span>
+                </div>
+            </div>
+        </div>
+    </header>
 </body>
 
 </html>
