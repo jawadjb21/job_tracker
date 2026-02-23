@@ -25,23 +25,23 @@
     </style>
 </head>
 
-<body class=".acme-regular min-h-screen max-w-full bg-base-200 mx-auto px-10">
+<body class=".acme-regular min-h-screen max-w-full bg-base-200 mx-auto px-5 lg:px-40 md:px-10">
     <header>
         <h2 class="font-bold text-3xl text text-[#002C5C] my-4">Job Application Tracker</h2>
         <div id="info-cards" class="flex justify-between items-center gap-1">
-            <div class="card bg-slate-700 text-neutral-content w-96 shadow-2xl">
+            <div class="card bg-slate-700 text-neutral-content w-96 max-w-full shadow-2xl">
                 <div class="card-body flex flex-col justify-start items-center text-center p-1">
                     <h2 class="card-title">Total</h2>
                     <span>8</span>
                 </div>
             </div>
-            <div class="card bg-slate-700 text-neutral-content w-96 shadow-xl">
+            <div class="card bg-slate-700 text-neutral-content w-96 max-w-full shadow-2xl">
                 <div class="card-body flex flex-col justify-start items-center text-center p-1 drop-shadow-2xl">
                     <h2 class="card-title">Accepted</h2>
                     <span>0</span>
                 </div>
             </div>
-            <div class="card bg-slate-700 text-neutral-content w-96 shadow-xl">
+            <div class="card bg-slate-700 text-neutral-content w-96 max-w-full shadow-2xl">
                 <div class="card-body flex flex-col justify-start items-center text-center p-1 drop-shadow-2xl">
                     <h2 class="card-title">Rejected</h2>
                     <span>0</span>
@@ -49,6 +49,43 @@
             </div>
         </div>
     </header>
+
+    <section class="pt-10">
+        <div class="flex justify-between items-center">
+            <h4 class="font-bold text-3xl text text-[#002C5C] my-4">Available Jobs</h2>
+                <span class="text-slate-700">8 jobs</span>
+        </div>
+        <div class="flex justify-start gap-2 my-5">
+            <button class="btn btn-outline text-slate-700">All</button>
+            <button class="btn btn-outline text-slate-700">Accepted</button>
+            <button class="btn btn-outline text-slate-700">Rejected</button>
+        </div>
+        <div id="info-cards" class="grid grid-cols-1 justify-between items-center gap-5">
+            <div class="card bg-transparent text-slate-950 w-full shadow-2xl">
+                <div class="card-body flex flex-col justify-start items-start text-left pl-5">
+                    <div id="card-header" class="flex justify-between items-center flex-1 w-full">
+                        <div>
+                            <h4 class="card-title">Mobile First Corp</h2>
+                                <span>React Native Developer</span>
+                        </div>
+                        <button id="delete-btn" class="btn btn-ghost"><i class="fa-regular fa-trash-can"></i></button>
+                    </div>
+                    <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
+                        <li>Remote</li>
+                        <li>Native</li>
+                        <li>$130,000 - $175,000</li>
+                    </ul>
+                    <button class="btn btn-outline">Not Applied</button>
+                    <p>Build cross-platformed mobile applications using React Native.</p>
+                    <div class="flex justify-start items-center gap-5">
+                        <button class="btn btn-outline text-green-500">Accepted</button>
+                        <button class="btn btn-outline text-red-500">Rejected</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
 </body>
 
 </html>
