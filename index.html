@@ -73,9 +73,9 @@
                 <span class="text-slate-700">8 jobs</span>
         </div>
         <div class="flex justify-start gap-2 my-5">
-            <button id="main-page" class="btn btn-outline text-slate-700">All</button>
-            <button id="accept-page" class="btn btn-outline text-slate-700">Accepted</button>
-            <button id="reject-page" class="btn btn-outline text-slate-700">Rejected</button>
+            <button id="main-page" class="btn btn-outline text-slate-700" onclick="toggleTabs('main-page')">All</button>
+            <button id="accept-page" class="btn btn-outline text-slate-700" onclick="toggleTabs('accept-page')">Accepted</button>
+            <button id="reject-page" class="btn btn-outline text-slate-700" onclick="toggleTabs('reject-page')">Rejected</button>
         </div>
         <div id="job-cards" class="grid grid-cols-1 justify-between items-center gap-5">
             <div id="mobile-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
