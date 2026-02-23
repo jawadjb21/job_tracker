@@ -28,7 +28,9 @@
 </head>
 
 <body class="acme-regular min-h-screen max-w-full bg-base-200 mx-auto px-5 lg:px-40 md:px-10">
-    <header>
+    <!-- Made the header sticky, and it needs a top value to refer to for sticking. 
+        Also, increased z-index to hide the info that we're scrolling up. -->
+    <header class="sticky top-0 z-50 bg-base-200">
         <div class="flex justify-between items-center">
             <h2 class="font-bold text-3xl text text-[#002C5C] my-4">Job Application Tracker</h2>
             <label class="flex cursor-pointer gap-2">
@@ -66,205 +68,225 @@
             </div>
         </div>
     </header>
-
-    <section class="pt-10">
-        <div class="flex justify-between items-center">
-            <h4 class="font-bold text-3xl text text-[#002C5C] my-4">Available Jobs</h4>
+    <main>
+        <section class="pt-10">
+            <div class="flex justify-between items-center">
+                <h4 class="font-bold text-3xl text text-[#002C5C] my-4">Available Jobs</h4>
                 <span class="text-slate-700">8 jobs</span>
-        </div>
-        <div class="flex justify-start gap-2 my-5">
-            <button id="main-page" class="btn btn-outline text-slate-700" onclick="toggleTabs('main-page')">All</button>
-            <button id="accept-page" class="btn btn-outline text-slate-700" onclick="toggleTabs('accept-page')">Accepted</button>
-            <button id="reject-page" class="btn btn-outline text-slate-700" onclick="toggleTabs('reject-page')">Rejected</button>
-        </div>
-        <div id="job-cards" class="grid grid-cols-1 justify-between items-center gap-5">
-            <div id="mobile-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
-                <div class="card-body flex flex-col justify-start items-start text-left pl-5">
-                    <div id="card-header" class="flex justify-between items-center flex-1 w-full">
-                        <div>
-                            <h4 class="card-title">Mobile First Corp</h4>
-                                <span>React Native Developer</span>
+            </div>
+            <div class="flex justify-start gap-2 my-5">
+                <button id="main-page-tab-btn" class="btn btn-outline text-slate-700"
+                    onclick="toggleTabs('main-page-tab-btn')">All</button>
+                <button id="accept-page-tab-btn" class="btn btn-outline text-slate-700"
+                    onclick="toggleTabs('accept-page-tab-btn')">Accepted</button>
+                <button id="reject-page-tab-btn" class="btn btn-outline text-slate-700"
+                    onclick="toggleTabs('reject-page-tab-btn')">Rejected</button>
+            </div>
+            <section id="all-page">
+                <div id="job-cards" class="grid grid-cols-1 justify-between items-center gap-5">
+                    <div id="mobile-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
+                        <div class="card-body flex flex-col justify-start items-start text-left pl-5">
+                            <div id="card-header" class="flex justify-between items-center flex-1 w-full">
+                                <div>
+                                    <h4 class="card-title company">Mobile First Corp</h4>
+                                    <span class="job-post">React Native Developer</span>
+                                </div>
+                                <button class="btn btn-ghost delete-btn"><i
+                                        class="fa-regular fa-trash-can"></i></button>
+                            </div>
+                            <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
+                                <li class="job-info">Remote</li>
+                                <li class="job-info">Native</li>
+                                <li class="job-info">$130,000 - $175,000</li>
+                            </ul>
+                            <button class="btn btn-outline job-status">Not Applied</button>
+                            <p class="job-description">Build cross-platformed mobile applications using React Native.
+                            </p>
+                            <div class="flex justify-start items-center gap-5">
+                                <button class="accept-btn btn btn-outline text-green-500">Accept</button>
+                                <button class="reject-btn btn btn-outline text-red-500">Reject</button>
+                            </div>
                         </div>
-                        <button class="btn btn-ghost delete-btn"><i class="fa-regular fa-trash-can"></i></button>
                     </div>
-                    <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
-                        <li>Remote</li>
-                        <li>Native</li>
-                        <li>$130,000 - $175,000</li>
-                    </ul>
-                    <button class="btn btn-outline">Not Applied</button>
-                    <p>Build cross-platformed mobile applications using React Native.</p>
-                    <div class="flex justify-start items-center gap-5">
-                        <button class="accept-btn btn btn-outline text-green-500">Accept</button>
-                        <button class="reject-btn btn btn-outline text-red-500">Reject</button>
+                    <div id="web-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
+                        <div class="card-body flex flex-col justify-start items-start text-left pl-5">
+                            <div id="card-header" class="flex justify-between items-center flex-1 w-full">
+                                <div>
+                                    <h4 class="card-title company">WebFlow Agency</h4>
+                                    <span class="job-post">Web Designer & Developer</span>
+                                </div>
+                                <button class="btn btn-ghost delete-btn"><i
+                                        class="fa-regular fa-trash-can"></i></button>
+                            </div>
+                            <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
+                                <li class="job-info">Los Angeles, CA</li>
+                                <li class="job-info">Part-time</li>
+                                <li class="job-info">$80,000 - $120,000</li>
+                            </ul>
+                            <button class="btn btn-outline job-status">Not Applied</button>
+                            <p class="job-description">Build cross-platformed mobile applications using React Native.
+                            </p>
+                            <div class="flex justify-start items-center gap-5">
+                                <button class="accept-btn btn btn-outline text-green-500">Accept</button>
+                                <button class="reject-btn btn btn-outline text-red-500">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="innov-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
+                        <div class="card-body flex flex-col justify-start items-start text-left pl-5">
+                            <div id="card-header" class="flex justify-between items-center flex-1 w-full">
+                                <div>
+                                    <h4 class="card-title company">Innovation Labs</h4>
+                                    <span class="job-post">UI/UX Engineer</span>
+                                </div>
+                                <button class="btn btn-ghost delete-btn"><i
+                                        class="fa-regular fa-trash-can"></i></button>
+                            </div>
+                            <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
+                                <li class="job-info">Austin, TX</li>
+                                <li class="job-info">Full-Time</li>
+                                <li class="job-info">$130,000 - $175,000</li>
+                            </ul>
+                            <button class="btn btn-outline job-status">Not Applied</button>
+                            <p class="job-description">Build cross-platformed mobile applications using React Native.
+                            </p>
+                            <div class="flex justify-start items-center gap-5">
+                                <button class="accept-btn btn btn-outline text-green-500">Accept</button>
+                                <button class="reject-btn btn btn-outline text-red-500">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="data-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
+                        <div class="card-body flex flex-col justify-start items-start text-left pl-5">
+                            <div id="card-header" class="flex justify-between items-center flex-1 w-full">
+                                <div>
+                                    <h4 class="card-title company">DataViz Solutions</h4>
+                                    <span class="job-post">Data Visualisation Specialist</span>
+                                </div>
+                                <button class="btn btn-ghost delete-btn"><i
+                                        class="fa-regular fa-trash-can"></i></button>
+                            </div>
+                            <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
+                                <li class="job-info">Boston, MA</li>
+                                <li class="job-info">Full-time</li>
+                                <li class="job-info">$130,000 - $160,000</li>
+                            </ul>
+                            <button class="btn btn-outline job-status">Not Applied</button>
+                            <p class="job-description">Build cross-platformed mobile applications using React Native.
+                            </p>
+                            <div class="flex justify-start items-center gap-5">
+                                <button class="accept-btn btn btn-outline text-green-500">Accept</button>
+                                <button class="reject-btn btn btn-outline text-red-500">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="cloud-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
+                        <div class="card-body flex flex-col justify-start items-start text-left pl-5">
+                            <div id="card-header" class="flex justify-between items-center flex-1 w-full">
+                                <div>
+                                    <h4 class="card-title company">CloudFirst Inc</h4>
+                                    <span class="job-post">Banckend Developer</span>
+                                </div>
+                                <button class="btn btn-ghost delete-btn"><i
+                                        class="fa-regular fa-trash-can"></i></button>
+                            </div>
+                            <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
+                                <li class="job-info">Seattle,WA</li>
+                                <li class="job-info">Full-Time</li>
+                                <li class="job-info">$150,000 - $200,000</li>
+                            </ul>
+                            <button class="btn btn-outline job-status">Not Applied</button>
+                            <p class="job-description">Build cross-platformed mobile applications using React Native.
+                            </p>
+                            <div class="flex justify-start items-center gap-5">
+                                <button class="accept-btn btn btn-outline text-green-500">Accept</button>
+                                <button class="reject-btn btn btn-outline text-red-500">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="mega-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
+                        <div class="card-body flex flex-col justify-start items-start text-left pl-5">
+                            <div id="card-header" class="flex justify-between items-center flex-1 w-full">
+                                <div>
+                                    <h4 class="card-title company">MegaCorp</h4>
+                                    <span class="job-post">JavaScript Developer</span>
+                                </div>
+                                <button class="btn btn-ghost delete-btn"><i
+                                        class="fa-regular fa-trash-can"></i></button>
+                            </div>
+                            <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
+                                <li class="job-info">New York, NY</li>
+                                <li class="job-info">Full-Time</li>
+                                <li class="job-info">$130,000 - $175,000</li>
+                            </ul>
+                            <button class="btn btn-outline job-status">Not Applied</button>
+                            <p class="job-description">Build cross-platformed mobile applications using React Native.
+                            </p>
+                            <div class="flex justify-start items-center gap-5">
+                                <button class="accept-btn btn btn-outline text-green-500">Accept</button>
+                                <button class="reject-btn btn btn-outline text-red-500">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="startup-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
+                        <div class="card-body flex flex-col justify-start items-start text-left pl-5">
+                            <div id="card-header" class="flex justify-between items-center flex-1 w-full">
+                                <div>
+                                    <h4 class="card-title company">StartUP XYZ</h4>
+                                    <span class="job-post">Full Stack Engineer</span>
+                                </div>
+                                <button class="btn btn-ghost delete-btn"><i
+                                        class="fa-regular fa-trash-can"></i></button>
+                            </div>
+                            <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
+                                <li class="job-info">Remote</li>
+                                <li class="job-info">Full-Time</li>
+                                <li class="job-info">$130,000 - $175,000</li>
+                            </ul>
+                            <button class="btn btn-outline job-status">Not Applied</button>
+                            <p class="job-description">Build cross-platformed mobile applications using React Native.
+                            </p>
+                            <div class="flex justify-start items-center gap-5">
+                                <button class="accept-btn btn btn-outline text-green-500">Accept</button>
+                                <button class="reject-btn btn btn-outline text-red-500">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tech-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
+                        <div class="card-body flex flex-col justify-start items-start text-left pl-5">
+                            <div id="card-header" class="flex justify-between items-center flex-1 w-full">
+                                <div>
+                                    <h4 class="card-title company">TechCorp</h4>
+                                    <span class="job-post">Senior FrontEnd Developer</span>
+                                </div>
+                                <button class="btn btn-ghost delete-btn"><i
+                                        class="fa-regular fa-trash-can"></i></button>
+                            </div>
+                            <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
+                                <li class="job-info">San Francisco, LA</li>
+                                <li class="job-info">Full-TIme</li>
+                                <li class="job-info">$130,000 - $175,000</li>
+                            </ul>
+                            <button class="btn btn-outline job-status">Not Applied</button>
+                            <p class="job-description">Build cross-platformed mobile applications using React Native.
+                            </p>
+                            <div class="flex justify-start items-center gap-5">
+                                <button class="accept-btn btn btn-outline text-green-500">Accept</button>
+                                <button class="reject-btn btn btn-outline text-red-500">Reject</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div id="web-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
-                <div class="card-body flex flex-col justify-start items-start text-left pl-5">
-                    <div id="card-header" class="flex justify-between items-center flex-1 w-full">
-                        <div>
-                            <h4 class="card-title">WebFlow</h4>
-                                <span>Web Designer</span>
-                        </div>
-                        <button id="web-delete-btn" class="btn btn-ghost"><i class="fa-regular fa-trash-can"></i></button>
-                    </div>
-                    <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
-                        <li>Remote</li>
-                        <li>Native</li>
-                        <li>$80,000 - $120,000</li>
-                    </ul>
-                    <button class="btn btn-outline">Not Applied</button>
-                    <p>Create stunning web experiences for high-profile clients. Must have portfolio and experience with
-                        modern web design trends.</p>
-                    <div class="flex justify-start items-center gap-5">
-                        <button id="webflow-accept" class="btn btn-outline text-green-500">Accepted</button>
-                        <button id="webflow-reject" class="btn btn-outline text-red-500">Rejected</button>
-                    </div>
-                </div>
-            </div>
-            <div id="data-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
-                <div class="card-body flex flex-col justify-start items-start text-left pl-5">
-                    <div id="card-header" class="flex justify-between items-center flex-1 w-full">
-                        <div>
-                            <h4 class="card-title">DataViz</h4>
-                                <span>Data Visualisation Specialist</span>
-                        </div>
-                        <button id="data-delete-btn" class="btn btn-ghost"><i class="fa-regular fa-trash-can"></i></button>
-                    </div>
-                    <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
-                        <li>Remote</li>
-                        <li>Native</li>
-                        <li>$125,000 - $165,000</li>
-                    </ul>
-                    <button class="btn btn-outline">Not Applied</button>
-                    <p>Transform complex data into compelling visualizations. Required skills: D3.js, React, and strong
-                        analytical thinking.
-                    </p>
-                    <div class="flex justify-start items-center gap-5">
-                        <button id="dataviz-accept" class="btn btn-outline text-green-500">Accept</button>
-                        <button id="dataviz-reject" class="btn btn-outline text-red-500">Reject</button>
-                    </div>
-                </div>
-            </div>
-            <div id="cloud-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
-                <div class="card-body flex flex-col justify-start items-start text-left pl-5">
-                    <div id="card-header" class="flex justify-between items-center flex-1 w-full">
-                        <div>
-                            <h4 class="card-title">CloudFirst Inc</h4>
-                                <span>Backend Developer</span>
-                        </div>
-                        <button id="cloud-delete-btn" class="btn btn-ghost"><i class="fa-regular fa-trash-can"></i></button>
-                    </div>
-                    <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
-                        <li>Remote</li>
-                        <li>Native</li>
-                        <li>$130,000 - $175,000</li>
-                    </ul>
-                    <button class="btn btn-outline">Not Applied</button>
-                    <p>Design and maintain scalable backend systems using Python and AWS. Work with modern DevOps
-                        practices and cloud infrastructure.</p>
-                    <div class="flex justify-start items-center gap-5">
-                        <button id="cloudfirst-accept" class="btn btn-outline text-green-500">Accept</button>
-                        <button id="cloudfirst-reject" class="btn btn-outline text-red-500">Reject</button>
-                    </div>
-                </div>
-            </div>
-            <div id="innov-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
-                <div class="card-body flex flex-col justify-start items-start text-left pl-5">
-                    <div id="card-header" class="flex justify-between items-center flex-1 w-full">
-                        <div>
-                            <h4 class="card-title">Innovation Labs</h4>
-                                <span>UI/UX Engineer</span>
-                        </div>
-                        <button id="delete-btn" class="btn btn-ghost"><i class="fa-regular fa-trash-can"></i></button>
-                    </div>
-                    <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
-                        <li>Remote</li>
-                        <li>Native</li>
-                        <li>$130,000 - $175,000</li>
-                    </ul>
-                    <button class="btn btn-outline">Not Applied</button>
-                    <p>Create beautiful and functional user interfaces for our suite of products. Strong design skills
-                        and frontend development expertise required.</p>
-                    <div class="flex justify-start items-center gap-5">
-                        <button id="innovation-accept" class="btn btn-outline text-green-500">Accept</button>
-                        <button id="innovation-reject" class="btn btn-outline text-red-500">Reject</button>
-                    </div>
-                </div>
-            </div>
-            <div id="mega-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
-                <div class="card-body flex flex-col justify-start items-start text-left pl-5">
-                    <div id="card-header" class="flex justify-between items-center flex-1 w-full">
-                        <div>
-                            <h4 class="card-title">MegaCorp Solutions</h4>
-                                <span>JavaScript Developer</span>
-                        </div>
-                        <button id="delete-btn" class="btn btn-ghost"><i class="fa-regular fa-trash-can"></i></button>
-                    </div>
-                    <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
-                        <li>Remote</li>
-                        <li>Native</li>
-                        <li>$130,000 - $175,000</li>
-                    </ul>
-                    <button class="btn btn-outline">Not Applied</button>
-                    <p>Build enterprise applications with JavaScript and modern frameworks. We offer competitive
-                        compensation, health insurance, and professional development opportunities.</p>
-                    <div class="flex justify-start items-center gap-5">
-                        <button id="megacorp-accept" class="btn btn-outline text-green-500">Accept</button>
-                        <button id="megacorp-reject" class="btn btn-outline text-red-500">Reject</button>
-                    </div>
-                </div>
-            </div>
-            <div id="startup-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
-                <div class="card-body flex flex-col justify-start items-start text-left pl-5">
-                    <div id="card-header" class="flex justify-between items-center flex-1 w-full">
-                        <div>
-                            <h4 class="card-title">StartupXYZ</h4>
-                                <span>Full Stack Engineer</span>
-                        </div>
-                        <button id="delete-btn" class="btn btn-ghost"><i class="fa-regular fa-trash-can"></i></button>
-                    </div>
-                    <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
-                        <li>Remote</li>
-                        <li>Native</li>
-                        <li>$130,000 - $175,000</li>
-                    </ul>
-                    <button class="btn btn-outline">Not Applied</button>
-                    <p>Join our fast-growing startup and work on our core platform. Experience with Node.js and React
-                        required. Great benefits and equity package included.</p>
-                    <div class="flex justify-start items-center gap-5">
-                        <button id="startup-accept" class="btn btn-outline text-green-500">Accept</button>
-                        <button id="startup-reject" class="btn btn-outline text-red-500">Reject</button>
-                    </div>
-                </div>
-            </div>
-            <div id="tech-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
-                <div class="card-body flex flex-col justify-start items-start text-left pl-5">
-                    <div id="card-header" class="flex justify-between items-center flex-1 w-full">
-                        <div>
-                            <h4 class="card-title">TechCorp Industries</h4>
-                                <span>Senior Frontend Developer</span>
-                        </div>
-                        <button id="delete-btn" class="btn btn-ghost"><i class="fa-regular fa-trash-can"></i></button>
-                    </div>
-                    <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
-                        <li>Remote</li>
-                        <li>Native</li>
-                        <li>$130,000 - $175,000</li>
-                    </ul>
-                    <button class="btn btn-outline">Not Applied</button>
-                    <p>We are looking for an experienced Frontend Developer to build scalable web applications using
-                        React and TypeScript. You will work with a talented team on cutting-edge projects.</p>
-                    <div class="flex justify-start items-center gap-5">
-                        <button id="frontend-accept" class="btn btn-outline text-green-500">Accept</button>
-                        <button id="frontend-reject" class="btn btn-outline text-red-500">Reject</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
+            <section id="accepted-jobs" class="hidden">
 
+            </section>
+            <section id="rejected-jobs" class="hidden">
+
+            </section>
+        </section>
+
+    </main>
     <footer class="footer sm:footer-horizontal bg-slate-700 text-neutral-content p-10 mt-5">
         <aside>
             <svg width="50" height="50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"
