@@ -20,7 +20,9 @@ const rejectPage = document.getElementById("reject-page-tab-btn");
 
 // Returns an HTML collection of the children, on which we apply length method.
 let noOfCards = document.getElementById("job-cards").children.length;
-console.log(noOfCards);
+
+// Tab tracking for re-rendering. Once a tab is clicked, variable is changed, and that page we're currently on is re-rendered.
+let currentTab = "all";
 
 // Job Counter
 function countJobs(){
@@ -29,73 +31,6 @@ function countJobs(){
     rejectCount.innerText = rejectedArr.length;
 }
 countJobs();
-
-
-// Render Accepted page.
-mainContainer.addEventListener("click", function(event){
-    if(event.target.classList.contains('accept-btn')){
-        const card = event.target.closest(".card");
-        console.log(card);
-        const company = card.querySelector(".company");
-        const post = card.querySelector(".job-post");
-        const info = card.querySelectorAll(".job-info");
-        const status = card.querySelector(".job-status");
-        const description = card.querySelector(".job-description");
-
-        const job = {company: company, post: post, info: info, status: status, desc: description};
-
-        const alreadyApplied = acceptedArr.find(item=> item.company === job.company);
-        if(!alreadyApplied){
-            acceptedArr.push(job);
-            
-            // Set the status on the homepage itself to "Accepted".
-            status.innerText = "Accepted";
-    
-            // Increment counter
-            acceptCount.innerText = acceptedArr.length;
-        }
-
-        rejectedArr = rejectedArr.filter(item=> item.company !== job.company);
-        // Decrement rejected counter
-        rejectCount.innerText = rejectedArr.length;
-
-        console.log(job);
-        
-        // Render accepted tab
-        renderAccepted()
-    }
-    else if(event.target.classList.contains('reject-btn')){
-        const card = event.target.closest(".card");
-        console.log(card);
-        const company = card.querySelector(".company");
-        const post = card.querySelector(".job-post");
-        const info = card.querySelectorAll(".job-info");
-        const status = card.querySelector(".job-status");
-        const description = card.querySelector(".job-description");
-
-        const job = {company: company, post: post, info: info, status: status, desc: description};
-
-        const alreadyRejected = rejectedArr.find(item=> item.company === job.company);
-        if(!alreadyRejected){
-            rejectedArr.push(job);
-            // Set the status on the homepage itself to "Accepted".
-            status.innerText = "Rejected";
-            
-            console.log(job);
-
-            // Increment counter
-            rejectCount.innerText = rejectedArr.length;
-        }
-        acceptedArr = acceptedArr.filter(item=> item.company !== job.company);
-        // Decrement rejected counter
-        acceptCount.innerText = acceptedArr.length;
-
-
-        // Render rejected tab
-        renderRejected()
-    }
-})
-
 
 function renderAccepted(){
     accepted.innerHTML = '';
@@ -107,18 +42,18 @@ function renderAccepted(){
                     <div class="card-body flex flex-col justify-start items-start text-left pl-5">
                         <div id="card-header" class="flex justify-between items-center flex-1 w-full">
                             <div>
-                                <h4 class="card-title company">${acceptedJob.company.innerText}</h4>
-                                <span class="job-post">${acceptedJob.post.innerText}</span>
+                                <h4 class="card-title company">${acceptedJob.company}</h4>
+                                <span class="job-post">${acceptedJob.post}</span>
                             </div>
                             <button class="btn btn-ghost delete-btn"><i class="fa-regular fa-trash-can"></i></button>
                         </div>
                         <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
-                            <li class="job-info">${acceptedJob.info[0].innerText}</li>
-                            <li class="job-info">${acceptedJob.info[1].innerText}</li>
-                            <li class="job-info">${acceptedJob.info[2].innerText}</li>
+                            <li class="job-info">${acceptedJob.info[0]}</li>
+                            <li class="job-info">${acceptedJob.info[1]}</li>
+                            <li class="job-info">${acceptedJob.info[2]}</li>
                         </ul>
                         <button class="btn btn-outline job-status">Accepted</button>
-                        <p class="job-description">${acceptedJob.desc.innerText}</p>
+                        <p class="job-description">${acceptedJob.desc}</p>
                         <div class="flex justify-start items-center gap-5">
                             <button class="accept-btn btn btn-outline text-green-500">Accept</button>
                             <button class="reject-btn btn btn-outline text-red-500">Reject</button>
@@ -128,6 +63,8 @@ function renderAccepted(){
         `
         accepted.appendChild(div);
     }
+    // Change counter
+    acceptCount.innerText = acceptedArr.length;
 }
 
 function renderRejected(){
@@ -140,18 +77,18 @@ function renderRejected(){
                     <div class="card-body flex flex-col justify-start items-start text-left pl-5">
                         <div id="card-header" class="flex justify-between items-center flex-1 w-full">
                             <div>
-                                <h4 class="card-title company">${rejectedJob.company.innerText}</h4>
-                                <span class="job-post">${rejectedJob.post.innerText}</span>
+                                <h4 class="card-title company">${rejectedJob.company}</h4>
+                                <span class="job-post">${rejectedJob.post}</span>
                             </div>
                             <button class="btn btn-ghost delete-btn"><i class="fa-regular fa-trash-can"></i></button>
                         </div>
                         <ul class="flex flex-col md:flex-row lg:flex-row list-disc list-inside gap-3">
-                            <li class="job-info">${rejectedJob.info[0].innerText}</li>
-                            <li class="job-info">${rejectedJob.info[1].innerText}</li>
-                            <li class="job-info">${rejectedJob.info[2].innerText}</li>
+                            <li class="job-info">${rejectedJob.info[0]}</li>
+                            <li class="job-info">${rejectedJob.info[1]}</li>
+                            <li class="job-info">${rejectedJob.info[2]}</li>
                         </ul>
                         <button class="btn btn-outline job-status">Rejected</button>
-                        <p class="job-description">${rejectedJob.desc.innerText}</p>
+                        <p class="job-description">${rejectedJob.desc}</p>
                         <div class="flex justify-start items-center gap-5">
                             <button class="accept-btn btn btn-outline text-green-500">Accept</button>
                             <button class="reject-btn btn btn-outline text-red-500">Reject</button>
@@ -161,6 +98,8 @@ function renderRejected(){
         `
         rejected.appendChild(div);
     }
+    // Change counter
+    rejectCount.innerText = rejectedArr.length;
 }
 // Toggle Tabs
 function toggleTabs(id){
@@ -186,15 +125,84 @@ function toggleTabs(id){
     if(id.toLowerCase() === 'accept-page-tab-btn'){
         allPage.classList.add("hidden");
         rejected.classList.add("hidden");
-        accepted.classList.remove("hidden");        
+        accepted.classList.remove("hidden");
+        renderAccepted();
     }
     if(id.toLowerCase() === 'reject-page-tab-btn'){
         allPage.classList.add("hidden");
         accepted.classList.add("hidden");
-        rejected.classList.remove("hidden");        
+        rejected.classList.remove("hidden");
+        renderRejected();       
     }
+    // Change currentTab for tracking.
+    currentTab = id;
 }
 
+// Render Accepted page.
+mainContainer.addEventListener("click", function(event){
+    if(event.target.classList.contains('accept-btn')){
+        const card = event.target.closest(".card");
+        console.log(card);
+        const company = card.querySelector(".company").innerText;
+        const post = card.querySelector(".job-post").innerText;
+        const info = card.querySelectorAll(".job-info");
+        let status = card.querySelector(".job-status").innerText;
+        const description = card.querySelector(".job-description").innerText;
+
+        const job = {company: company, post: post, info : [info[0].innerText, info[1].innerText, info[2].innerText], status: status, desc: description};
+
+        const alreadyApplied = acceptedArr.find(item=> item.company === job.company);
+        if(!alreadyApplied){
+            acceptedArr.push(job);
+            
+            // Set the status on the homepage itself to "Accepted".
+            status = "Accepted";
+        }
+        // Decrement rejected counter
+        rejectedArr = rejectedArr.filter(item=> item.company !== job.company);
+        rejectCount.innerText = rejectedArr.length;
+
+        console.log(job);
+        
+        // Render accepted tab
+        renderAccepted()
+
+        if(currentTab === 'reject-page-tab-btn'){
+            renderRejected();
+        }
+    }
+    else if(event.target.classList.contains('reject-btn')){
+        const card = event.target.closest(".card");
+        console.log(card);
+        const company = card.querySelector(".company").innerText;
+        const post = card.querySelector(".job-post").innerText;
+        const info = card.querySelectorAll(".job-info");
+        let status = card.querySelector(".job-status").innerText;
+        const description = card.querySelector(".job-description").innerText;
+
+        const job = {company: company, post: post, info : [info[0].innerText, info[1].innerText, info[2].innerText], status: status, desc: description};
+
+        const alreadyRejected = rejectedArr.find(item=> item.company === job.company);
+        if(!alreadyRejected){
+            rejectedArr.push(job);
+            // Set the status on the homepage itself to "Accepted".
+            status = "Rejected";
+            
+            console.log(job);
+        }
+        // Decrement accepted counter
+        acceptedArr = acceptedArr.filter(item=> item.company !== job.company); 
+        acceptCount.innerText = acceptedArr.length;
+
+
+        // Render rejected tab
+        renderRejected()
+
+        if(currentTab === 'accept-page-tab-btn'){
+            renderAccepted();
+        }
+    }
+})
 
 // document.addEventListener("DOMContentLoaded", function () {
 //     console.log("Page loaded");
