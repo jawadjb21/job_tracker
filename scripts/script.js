@@ -261,14 +261,12 @@ mainContainer.addEventListener("click", function (event) {
     };
 
     // Delete Button implementation: If we click on delete, event is the icon. So, its parent button has delete button.
-    if (event.target.parentNode.classList.contains("delete-btn")) {
+    if (event.target.parentNode.classList.contains("delete-btn") || event.target.classList.contains("delete-btn")) {
         jobCards.removeChild(card);
         noOfCards -= 1;
         acceptedArr = acceptedArr.filter(item => item.company !== job.company);
         rejectedArr = rejectedArr.filter(item => item.company !== job.company);
 
-        // Updates job count shown on top based on new lengths.
-        countJobs();
 
         if (currentTab === "main-page-tab-btn") {
             showIndividualJobCount(noOfCards);
@@ -282,5 +280,9 @@ mainContainer.addEventListener("click", function (event) {
         else if (currentTab === "reject-page-tab-btn") {
             renderRejected();
         };
+
+        // Updates job count shown on top based on new lengths.
+        countJobs();
+
     };
 })
