@@ -75,6 +75,7 @@
                 <h4 class="font-bold text-3xl text text-[#002C5C] my-4">Available Jobs</h4>
                 <span id="current-tab-count" class="text-slate-700">8 jobs</span>
             </div>
+
             <div class="flex justify-start gap-2 my-5">
                 <button id="main-page-tab-btn" class="btn btn-outline text-slate-700"
                     onclick="toggleTabs('main-page-tab-btn')">All</button>
@@ -83,6 +84,7 @@
                 <button id="reject-page-tab-btn" class="btn btn-outline text-slate-700"
                     onclick="toggleTabs('reject-page-tab-btn')">Rejected</button>
             </div>
+
             <section id="all-page">
                 <div id="job-cards" class="grid grid-cols-1 justify-between items-center gap-5">
                     <div id="mobile-card" class="card bg-transparent text-slate-950 w-full shadow-2xl">
@@ -279,11 +281,18 @@
                     </div>
                 </div>
             </section>
+
             <section id="accepted-jobs" class="hidden">
-
             </section>
-            <section id="rejected-jobs" class="hidden">
 
+            <section id="rejected-jobs" class="hidden">
+            </section>
+
+            <section id="no-jobs" class="hidden">
+                <div class="flex flex-col justify-center items-center ">
+                    <i class="fa-regular fa-file-lines text-9xl"></i>
+                    <h4 class="font-bold text-3xl text text-[#002C5C] my-4">No Available Jobs</h4>
+                </div>
             </section>
         </section>
 

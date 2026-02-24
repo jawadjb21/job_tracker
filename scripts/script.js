@@ -20,14 +20,18 @@ const mainPage = document.getElementById("main-page-tab-btn");
 const acceptPage = document.getElementById("accept-page-tab-btn");
 const rejectPage = document.getElementById("reject-page-tab-btn");
 
+// Job card for deleting purposes
+const jobCards = document.getElementById("job-cards");
+const noJobs = document.getElementById("no-jobs");
+
 // Returns an HTML collection of the children, on which we apply length method.
 let noOfCards = document.getElementById("job-cards").children.length;
 
 // Tab tracking for re-rendering. Once a tab is clicked, variable is changed, and that page we're currently on is re-rendered.
-let currentTab = "all";
+let currentTab = "main-page-tab-btn";
 
 // Job Counter
-function countJobs(){
+function countJobs() {
     totalCount.innerText = noOfCards;
     acceptCount.innerText = acceptedArr.length;
     rejectCount.innerText = rejectedArr.length;
@@ -36,15 +40,24 @@ countJobs();
 
 
 // No. of jobs on each page.
-function showIndividualJobCount(number){
+function showIndividualJobCount(number) {
     currentTabCount.innerText = `${number} Jobs`
 }
 
 
 // Accepted Tab Implementation
-function renderAccepted(){
+function renderAccepted() {
     accepted.innerHTML = '';
-    for(let acceptedJob of acceptedArr){
+
+    // When rendering, if no jobs, show this page. Else, hide it.
+    if (acceptedArr.length === 0) {
+        noJobs.classList.remove("hidden");
+        return;
+    } else {
+        noJobs.classList.add("hidden");
+    }
+
+    for (let acceptedJob of acceptedArr) {
         let div = document.createElement("div");
         div.className = "grid grid-cols-1 justify-between items-center gap-5";
         div.innerHTML = `
@@ -73,15 +86,22 @@ function renderAccepted(){
         `
         accepted.appendChild(div);
     }
-    // Show no of job counts on the right.
-    showIndividualJobCount(acceptedArr.length);
 }
 
 
 // Rejected Tab Implementation
-function renderRejected(){
+function renderRejected() {
     rejected.innerHTML = '';
-    for(let rejectedJob of rejectedArr){
+    
+    // If no rejectd jobs, show noJobs page. Elsei, hide it.
+    if (rejectedArr.length === 0) {
+        noJobs.classList.remove("hidden");
+        return;
+    } else {
+        noJobs.classList.add("hidden");
+    }
+
+    for (let rejectedJob of rejectedArr) {
         let div = document.createElement("div");
         div.className = "grid grid-cols-1 justify-between items-center gap-5";
         div.innerHTML = `
@@ -110,13 +130,25 @@ function renderRejected(){
         `
         rejected.appendChild(div);
     }
-    // Change no of accepted jobs on the right
-    showIndividualJobCount(rejectedArr.length);
+
+}
+
+
+// Update main page status
+function updateMainCardStatus(company, newStatus) {
+    const allMainCards = document.querySelectorAll("#all-page .card");
+
+    allMainCards.forEach(card => {
+        const name = card.querySelector(".company").innerText;
+        if (name === company) {
+            card.querySelector(".job-status").innerText = newStatus;
+        }
+    });
 }
 
 
 // Toggle Tabs
-function toggleTabs(id){
+function toggleTabs(id) {
     // On each click, regardless of which button is clicked, set all buttons to default states.
     mainPage.classList.add("bg-transparent", "text-slate-700");
     acceptPage.classList.add("bg-transparent", "text-slate-700");
@@ -131,115 +163,124 @@ function toggleTabs(id){
     selected.classList.add("text-white", "bg-slate-700");
 
     // Show the page clicked on.
-    if(id.toLowerCase() === 'main-page-tab-btn'){
+    if (id.toLowerCase() === 'main-page-tab-btn') {
         allPage.classList.remove("hidden");
         rejected.classList.add("hidden");
         accepted.classList.add("hidden");
         // Change the total jobs on the right
-        showIndividualJobCount(noOfCards);       
+        showIndividualJobCount(noOfCards);
     }
-    if(id.toLowerCase() === 'accept-page-tab-btn'){
+    if (id.toLowerCase() === 'accept-page-tab-btn') {
         allPage.classList.add("hidden");
         rejected.classList.add("hidden");
         accepted.classList.remove("hidden");
         renderAccepted();
+        // Show no of job counts on the right.
+        showIndividualJobCount(acceptedArr.length);
     }
-    if(id.toLowerCase() === 'reject-page-tab-btn'){
+    if (id.toLowerCase() === 'reject-page-tab-btn') {
         allPage.classList.add("hidden");
         accepted.classList.add("hidden");
         rejected.classList.remove("hidden");
         renderRejected();
+        // Change no of accepted jobs on the right
+        showIndividualJobCount(rejectedArr.length);
     }
     // Change currentTab for tracking.
     currentTab = id;
 }
 
 // Delegation on "main" for all 3 buttons.
-mainContainer.addEventListener("click", function(event){
-        const card = event.target.closest(".card");
-        console.log(card);
-        const company = card.querySelector(".company").innerText;
-        const post = card.querySelector(".job-post").innerText;
-        const info = card.querySelectorAll(".job-info");
-        let status = card.querySelector(".job-status");
-        const description = card.querySelector(".job-description").innerText;
+mainContainer.addEventListener("click", function (event) {
+    const card = event.target.closest(".card");
+    if (!card) { return; }
+    console.log(card);
+    const company = card.querySelector(".company").innerText;
+    const post = card.querySelector(".job-post").innerText;
+    const info = card.querySelectorAll(".job-info");
+    let status = card.querySelector(".job-status");
+    const description = card.querySelector(".job-description").innerText;
 
-        const job = {company: company, post: post, info : [info[0].innerText, info[1].innerText, info[2].innerText], status: status, desc: description};
-   
+    const job = { company: company, post: post, info: [info[0].innerText, info[1].innerText, info[2].innerText], status: status, desc: description };
+    console.log(job.status.innerText);
+
     // For "accept" btn
-    if(event.target.classList.contains('accept-btn')){
+    if (event.target.classList.contains('accept-btn')) {
         // Returns undefined if item not found.
-        const alreadyApplied = acceptedArr.find(item=> item.company === job.company);
-        if(!alreadyApplied){
+        const alreadyApplied = acceptedArr.find(item => item.company === job.company);
+        if (!alreadyApplied) {
             acceptedArr.push(job);
             acceptCount.innerText = acceptedArr.length;
-            
-            // Set the status on the homepage itself to "Accepted".
-            status.innerText = "Accepted";
         }
-        // Update rejected array
-        rejectedArr = rejectedArr.filter(item=> item.company !== job.company);
+        // Update rejected array and counter on top.
+        rejectedArr = rejectedArr.filter(item => item.company !== job.company);
         rejectCount.innerText = rejectedArr.length;
 
-        console.log(job);
-        
+        // Change status
+        job.status.innerText = "Accepted";
+
+        // Update main page status
+        updateMainCardStatus(job.company, "Accepted");
+
         // Render accepted tab
         renderAccepted()
 
         // If we click accept from Rejected Jobs tab, re-render the rejected page.
-        if(currentTab === 'reject-page-tab-btn'){
+        if (currentTab === 'reject-page-tab-btn') {
             renderRejected();
+            // Change job count on the right
+            showIndividualJobCount(rejectedArr.length);
         }
     }
 
     // For "reject" btn
-    else if(event.target.classList.contains('reject-btn')){
-        const alreadyRejected = rejectedArr.find(item=> item.company === job.company);
-        if(!alreadyRejected){
+    else if (event.target.classList.contains('reject-btn')) {
+        const alreadyRejected = rejectedArr.find(item => item.company === job.company);
+        if (!alreadyRejected) {
             rejectedArr.push(job);
-            // Set the status on the homepage itself to "Rejected".
-            status.innerText = "Rejected";
-
+            // Update count on top.
             rejectCount.innerText = rejectedArr.length;
-            
-            console.log(job);
-        }
-        // Update accepted array
-        acceptedArr = acceptedArr.filter(item=> item.company !== job.company);
+        };
+        // Update accepted array and count on top.
+        acceptedArr = acceptedArr.filter(item => item.company !== job.company);
         acceptCount.innerText = acceptedArr.length;
 
+        // Set the status on the homepage itself to "Rejected".
+        status.innerText = "Rejected";
+        updateMainCardStatus(job.company, "Rejected");
 
         // Render rejected tab
         renderRejected()
 
         // If we click reject from Accepted Jobs tab, re-render the accepted page.
-        if(currentTab === 'accept-page-tab-btn'){
+        if (currentTab === 'accept-page-tab-btn') {
+            renderAccepted();
+            // Change job count on the right
+            showIndividualJobCount(acceptedArr.length);
+        };
+    };
+
+    // Delete Button implementation: If we click on delete, event is the icon. So, its parent button has delete button.
+    if (event.target.parentNode.classList.contains("delete-btn")) {
+        jobCards.removeChild(card);
+        noOfCards -= 1;
+        acceptedArr = acceptedArr.filter(item => item.company !== job.company);
+        rejectedArr = rejectedArr.filter(item => item.company !== job.company);
+
+        // Updates job count shown on top based on new lengths.
+        countJobs();
+
+        if (currentTab === "main-page-tab-btn") {
+            showIndividualJobCount(noOfCards);
+            if (jobCards.children.length === 0) {
+                noJobs.classList.remove("hidden");
+            }
+        }
+        else if (currentTab === "accept-page-tab-btn") {
             renderAccepted();
         }
-    }
+        else if (currentTab === "reject-page-tab-btn") {
+            renderRejected();
+        };
+    };
 })
-
-// document.addEventListener("DOMContentLoaded", function () {
-//     console.log("Page loaded");
-//     let deletedArr = [];
-
-//     document.getElementsByClassName("delete-btn").addEventListener("click", function (event) {
-//         const card = event.target.closest(".card");
-//         // hide the card
-//         card.classList.add("hidden");
-//         deletedArr.push(card);
-//         // reduce counted by counter innertext - deletedArr length
-//         const total = document.getElementById("total-counter").innerText;
-//         document.getElementById("total-counter").innerText = total - 1;
-//     })
-//     document.getElementById("web-delete-btn").addEventListener("click", function (event) {
-//         const card = event.target.closest(".card");
-//         // hide the card
-//         card.classList.add("hidden");
-//         deletedArr.push(card);
-//         // reduce counted by counter innertext - deletedArr length
-//         const total = document.getElementById("total-counter").innerText;
-//         document.getElementById("total-counter").innerText = total - 1;
-//     })
-    
-// })
